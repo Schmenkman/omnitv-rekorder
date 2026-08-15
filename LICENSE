@@ -1,0 +1,88 @@
+OmniTV-Rekorder — Urheberrecht und Nutzungsbedingungen
+======================================================
+
+Copyright (c) 2026 Schmenkman (https://github.com/Schmenkman).
+Alle Rechte vorbehalten.
+
+
+1. Schutzgegenstand
+-------------------
+
+Der OmniTV-Rekorder ist ein urheberrechtlich geschütztes Computerprogramm im
+Sinne des § 69a UrhG. Der Schutz umfasst den Quelltext, die daraus erzeugten
+ausführbaren Fassungen, den Aufbau der Schnittstelle sowie den Namen und das
+Erscheinungsbild.
+
+Der Schutz entsteht mit der Erstellung und bedarf keiner Anmeldung oder
+Registrierung. Dass die fertigen Fassungen hier öffentlich zum Herunterladen
+bereitliegen, bedeutet keine Freigabe des Werkes und keinen Verzicht auf
+Rechte.
+
+
+2. Was erlaubt ist
+------------------
+
+Jede Person darf die hier bereitgestellten Fassungen herunterladen,
+installieren und zu privaten Zwecken im eigenen Haushalt nutzen — auf NAS,
+Raspberry Pi, PC oder in einem eigenen Docker-Container.
+
+
+3. Was nicht erlaubt ist
+------------------------
+
+Ohne vorherige schriftliche Zustimmung des Rechteinhabers ist insbesondere
+untersagt:
+
+  a) das Vervielfältigen, Bearbeiten, Übersetzen oder Umarbeiten des
+     Programms oder von Teilen davon;
+
+  b) das Verbreiten, Weitergeben, Vermieten oder öffentliche
+     Zugänglichmachen des Programms oder von Teilen davon, auch in
+     veränderter Fassung;
+
+  c) das Veröffentlichen des Programms oder eines davon abgeleiteten
+     Programms in App-Stores, Verzeichnissen, Registries oder auf sonstigen
+     Vertriebswegen;
+
+  d) das Dekompilieren, Disassemblieren oder anderweitige Zurückgewinnen des
+     Quelltextes, soweit es dazu dient, das Programm oder Teile davon
+     nachzubilden, weiterzuverwenden oder zu verbreiten;
+
+  e) die Übernahme von Programmteilen, Strukturen oder Gestaltungselementen
+     in eigene oder fremde Projekte.
+
+Die zwingenden gesetzlichen Befugnisse der Nutzer nach §§ 69d und 69e UrhG
+bleiben unberührt. Das betrifft namentlich das Recht, zur Herstellung der
+Interoperabilität mit anderen Programmen unter den dort genannten
+Voraussetzungen zu dekompilieren. Dieses Recht deckt ausdrücklich nicht das
+Nachbilden, Weiterverwenden oder Verbreiten des OmniTV-Rekorders ab.
+
+
+4. Fremdbestandteile
+--------------------
+
+Der OmniTV-Rekorder bindet freie Bibliotheken anderer Urheber ein, unter
+anderem Kotlin, Ktor und kotlinx.serialization (Apache-Lizenz 2.0). Zum
+Betrieb wird eine Java-Laufzeitumgebung benötigt (etwa Eclipse Temurin,
+GPLv2 mit Classpath Exception), die nicht Bestandteil des Programms ist.
+
+Diese Bestandteile unterliegen ausschließlich ihren eigenen Lizenzen und
+werden von den vorstehenden Bedingungen nicht berührt oder eingeschränkt.
+
+
+5. Gewährleistung und Haftung
+-----------------------------
+
+Der OmniTV-Rekorder wird ohne Gewährleistung bereitgestellt. Eine Haftung
+für Schäden aus der Nutzung ist ausgeschlossen, soweit gesetzlich zulässig.
+
+Aufnahmen sind Privatkopien für den eigenen Gebrauch (§ 53 UrhG). Sie
+verbleiben auf dem gewählten Speicher und dürfen nicht weitergegeben oder
+veröffentlicht werden.
+
+
+6. Kontakt
+----------
+
+Anfragen zu Nutzungsrechten, Lizenzen oder Kooperationen über
+https://github.com/Schmenkman/omnitv-rekorder/issues
