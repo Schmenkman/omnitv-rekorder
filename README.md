@@ -34,17 +34,43 @@ den Autostart bei der Anmeldung ein und startet den Rekorder gleich. (Fehlt Java
 sie die Installation selbst über winget — sonst kurz Java 21 von
 [adoptium.net](https://adoptium.net) holen.) Entfernen: `Installieren.bat entfernen`.
 
-### NAS mit Docker (Synology, QNAP, Portainer …): fertiges Abbild
+### NAS mit Docker (Synology, QNAP, Unraid, Portainer …): fertiges Abbild
 
-Nichts bauen — das fertige Abbild kommt von `ghcr.io/schmenkman/omnitv-rekorder`
-(Intel wie ARM). Das kleine Paket
-[`omnitv-rekorder-docker.zip`](../../releases/latest/download/omnitv-rekorder-docker.zip)
-entpacken, in der `docker-compose.yml` **eine Zeile** auf deinen Aufnahme-Ordner zeigen
-lassen (am besten derselbe, den deine SMB-Freigabe teilt), dann:
+Nichts herunterladen und nichts bauen — das fertige Abbild kommt von
+`ghcr.io/schmenkman/omnitv-rekorder` und gibt es für Intel wie ARM. Diese
+`docker-compose.yml` anlegen und darin **eine Zeile** auf deinen Aufnahme-Ordner zeigen lassen
+(am besten derselbe, den deine SMB-Freigabe teilt):
+
+```yaml
+services:
+  omnitv-rekorder:
+    image: ghcr.io/schmenkman/omnitv-rekorder:latest
+    container_name: omnitv-rekorder
+    restart: unless-stopped
+    # Host-Netz ist Pflicht: Die App sucht den Rekorder per Rundruf im Heimnetz,
+    # und Rundrufe kommen durch eine Docker-Bridge nicht hindurch.
+    network_mode: host
+    environment:
+      OMNITV_NAME: "NAS-Rekorder"
+      # Optional: Wer Timer anlegen will, muss dieses Geheimnis mitschicken.
+      # OMNITV_GEHEIMNIS: "bitte-aendern"
+    volumes:
+      - /volume1/video/OmniTV-Aufnahmen:/aufnahmen   # ← diese Zeile anpassen
+      - ./daten:/daten
+```
+
+Dann:
 
 ```bash
 docker compose up -d
 ```
+
+Neue Fassungen holt `docker compose pull && docker compose up -d`.
+
+**Synology mit Container Manager:** Projekt anlegen, obige Datei einfügen, als Netzwerk
+**Host** wählen. **Unraid:** Container hinzufügen, Repository
+`ghcr.io/schmenkman/omnitv-rekorder:latest`, Network Type **Host**, einen Pfad auf
+`/aufnahmen` legen. Unraid meldet neue Fassungen danach von selbst im Docker-Reiter.
 
 ---
 
