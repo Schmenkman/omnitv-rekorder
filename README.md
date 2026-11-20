@@ -107,7 +107,7 @@ mit Namen auf, ein Druck übernimmt ihn (alternativ Adresse von Hand eingeben). 
 | `PUID` / `PGID` | leer (root) | Nur Docker: Nutzer und Gruppe, denen die Aufnahmen gehören |
 | `UMASK` | `022` | Nur Docker: Rechte neuer Dateien (`002` = Gruppe darf löschen) |
 
-## Was der Rekorder (noch) nicht kann — Stand 0.4
+## Was der Rekorder (noch) nicht kann — Stand 0.5
 
 - **Nur Direkt-Ströme** (die üblichen Xtream-`.ts`-Adressen). Sender, die ausschließlich
   HLS (`m3u8`) liefern, lehnt er mit klarer Meldung ab, statt Datenmüll aufzuzeichnen.
