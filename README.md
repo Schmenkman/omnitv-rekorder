@@ -59,15 +59,32 @@ Das gilt für alle:
 - **`PUID`/`PGID`:** Damit schreibt der Rekorder als dein NAS-Nutzer statt als root, und die
   Aufnahmen gehören dir. Die Zahlen nennt `id <name>` per SSH; ohne die beiden läuft er als root.
   `UMASK=002` heißt: Die Gruppe darf Aufnahmen ändern und löschen.
+- **Rechte prüft der Rekorder selbst:** Beim Start probiert er aus, ob dieser Nutzer in seine
+  Ordner wirklich schreiben darf. Darf er es nicht — etwa auf einer exFAT- oder NTFS-Platte, die
+  nur root beschreiben darf —, wählt der Rekorder selbst eine Kennung, die es darf, ohne
+  Sonderrechte, wo immer das reicht. Warum, steht im Log (`docker logs omnitv-rekorder`), samt
+  Dateisystem jedes Ordners. Umstellen musst du dafür nichts.
+- **Speicherort in der App wählen:** Einstellungen → Aufnahmen → OmniTV-Rekorder → „Speicherort
+  des Rekorders“. Zur Wahl steht, was im Container unter `/media` liegt: Platten und die Ordner
+  darauf. Auf einer gewählten Platte legt der Rekorder den Ordner `OmniTV-Aufnahmen` an. Weitere
+  Ordner machst du wählbar, indem du sie nach `/media/<Name>` einhängst.
+- **Container-Pfade genau so schreiben:** `/aufnahmen` und `/daten`, klein und mit allen
+  Buchstaben. Hängt dort nichts (etwa bei `/Aufnahme`), gingen Aufnahmen und Timer beim nächsten
+  Aktualisieren verloren — das Log warnt dann mit „ACHTUNG“.
+- **Die Timerliste liest nur der Rekorder:** `timer.json` enthält die Adressen deines Anbieters
+  und ist für andere Nutzer des NAS nicht lesbar (wo das Dateisystem Rechte kennt).
 
 **ZimaOS:** „+“ über den App-Symbolen → „Install a customized app“ → Import-Symbol oben rechts →
-Reiter „Docker Compose“ → Inhalt von `omnitv-rekorder-zimaos.yml` einfügen → Senden. Den
-Aufnahme-Ordner prüfen: `/DATA` liegt auf der Systemplatte, für viele Aufnahmen besser ein Ordner
-auf der großen Platte (`/media/<Platte>/…`). Danach die Kachel antippen: Erscheint
+Reiter „Docker Compose“ → Inhalt von `omnitv-rekorder-zimaos.yml` einfügen → Senden →
+Installieren; an den Pfaden musst du nichts ändern. Danach die Kachel antippen: Erscheint
 `{"name":"ZimaOS-Rekorder",…}`, läuft der Rekorder im Host-Netz. Lädt die Seite nicht, hat der
 Import das Host-Netz verworfen (bekannt aus ZimaOS 1.7.0) — dann in den Einstellungen der App im
-YAML-Editor `networks:` entfernen und `network_mode: host` eintragen. Scheitern Aufnahmen mit
-„Aufnahmedatei nicht anlegbar“ (etwa auf einer NTFS-Platte), `PUID` und `PGID` auf 0 setzen.
+YAML-Editor `networks:` entfernen und `network_mode: host` eintragen. Ohne Wahl landen die
+Aufnahmen unter `/DATA` auf der Systemplatte; die große Platte wählst du in der OmniTV-App als
+Speicherort. Dafür reicht die Vorlage mit `/media:/media` alle Platten an den Rekorder durch — er
+sieht damit auch ihre übrigen Daten. Wer das nicht möchte, ersetzt die Zeile durch einzelne
+Ordner (links der Ordner des NAS, rechts `/media/<Name>`). Eine später angesteckte Platte
+erscheint nach einem Neustart des Rekorders.
 **CasaOS:** App-Store → „Custom Install“ → Import.
 
 **Synology, QNAP, UGREEN, TrueNAS:** In `docker-compose.yml` die beiden Pfade anpassen, dann
@@ -104,10 +121,10 @@ mit Namen auf, ein Druck übernimmt ihn (alternativ Adresse von Hand eingeben). 
 | `OMNITV_NAME` | Rechnername | Anzeigename im Suchergebnis der App |
 | `OMNITV_GEHEIMNIS` | leer | Wenn gesetzt: Die App muss dasselbe Geheimnis eintragen |
 | `TZ` | `Europe/Berlin` | Zeitzone für die Uhrzeit in Dateinamen und Log |
-| `PUID` / `PGID` | leer (root) | Nur Docker: Nutzer und Gruppe, denen die Aufnahmen gehören |
+| `PUID` / `PGID` | leer (root) | Nur Docker: Nutzer und Gruppe, als die geschrieben werden soll; darf diese Kennung nicht schreiben, wählt der Rekorder selbst |
 | `UMASK` | `022` | Nur Docker: Rechte neuer Dateien (`002` = Gruppe darf löschen) |
 
-## Was der Rekorder (noch) nicht kann — Stand 0.5
+## Was der Rekorder (noch) nicht kann — Stand 0.6
 
 - **Nur Direkt-Ströme** (die üblichen Xtream-`.ts`-Adressen). Sender, die ausschließlich
   HLS (`m3u8`) liefern, lehnt er mit klarer Meldung ab, statt Datenmüll aufzuzeichnen.
